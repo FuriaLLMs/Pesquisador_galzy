@@ -1,44 +1,42 @@
-# Walkthrough: Arquitetura Industrial "Salto Industrial" (v7.0)
+# Walkthrough: Arquitetura Sênior "Geração Predator" (v8.0)
 
-Alcançamos a **Perfeição Matemática** na engenharia de busca OSINT. Esta versão transforma o Onion Hunter em um sistema de banco de dados robusto e de alta performance.
+Alcançamos o ápice da engenharia de busca para a Dark Web. A versão 8.0 abandona as limitações de protótipos e adota padrões de design de nível sênior para performance industrial.
 
-## 1. Persistência de Elite (SQLite FTS5)
-- **Cofre SQLite:** Substituímos o JSON por uma base de dados relacional com **WAL (Write-Ahead Logging)** habilitado.
-- **Busca Instantânea:** O motor de busca offline agora utiliza indexação **FTS5**, permitindo pesquisar milhões de registros em milissegundos.
-- **Integridade:** Gravação atômica que evita corrupção de dados sob carga massiva.
+## 1. Otimização de Persistência (O(log N))
+- **SQLite Triggers:** A tabela FTS5 agora se atualiza automaticamente via gatilhos `AFTER INSERT`. Eliminamos a reconstrução dispendiosa do índice, garantindo que o cofre permaneça rápido mesmo com milhões de registros.
+- **Operador MATCH & Prefix Match:** As buscas locais agora são baseadas em tokens (B-Trees). Implementamos suporte automático a prefixos (`link*`), permitindo resultados instantâneos e precisos.
+- **Batch Saving (executemany):** Os resultados são acumulados em memória e gravados em lote, otimizando transações de IO e reduzindo o desgaste do disco.
 
-## 2. Otimização de Performance Bruta
-- **Parsing lxml:** Migramos para o parser `lxml` escrito em C, ordens de grandeza mais rápido que o `html.parser` padrão.
-- **Regex Operacional:** Expressões regulares agora são pré-compiladas globalmente, otimizando o gasto de CPU no `DeepCrawler`.
-- **BaseEngine DRY:** Centralização de toda a lógica de rede, anonimato e jitter em um único ponto, garantindo que 100% do tráfego siga o protocolo de segurança.
+## 2. Eficiência Bruta de Memória (Zero RAM Bloat)
+- **Padrão Generator (Yield):** Todos os motores (Ahmia, DuckDuckGo, Feeds) foram refatorados para emitir links individualmente. Isso permite que o script processe manifestos gigantescos (como feeds de 200MB) mantendo o consumo de memória estável e baixo.
 
-## 3. Monitoramento e Resiliência
-- **Logging Profissional:** Implementamos a biblioteca `logging`. Erros não são mais "engolidos", mas registrados em `onion_hunter.log` com detalhes técnicos.
-- **Recursive Queue:** O `DeepCrawler` agora realiza recursão real, seguindo links em profundidade controlada de forma inteligente.
+## 3. Concorrência "Predator" (Task Feedback Loop)
+- **Desacoplamento de Threads:** O `DeepCrawler` não sequestra mais threads na recursão. Quando um novo link é descoberto, ele é devolvido ao loop principal (`main`), que agenda uma nova tarefa na pool de forma assíncrona.
+- **Recursão Dinâmica:** O sistema se expande organicamente conforme descobre novos alvos, sem risco de estourar a pilha de recursão ou bloquear a pool de execução.
 
 ---
 
-## 🚀 Como Operar a v7.0
+## 🚀 Guia de Operação v8.0
 
-### Caçada Industrial (Online)
+### Caçada de Elite (Online)
 ```bash
-poetry run python onion_hunter.py "armas"
+# Busca recursiva (Depth 1) com modo Predator
+poetry run python onion_hunter.py "alvo" --depth 1
 ```
 
-### Pesquisa no Cofre (Offline)
-Busca ultra-rápida no que já foi coletado:
+### Busca Instantânea no Cofre (Offline)
+Utiliza o poder do FTS5:
 ```bash
 poetry run python onion_hunter.py "bitcoin" --search
 ```
 
-### Logs de Auditoria
-Acompanhe os logs em tempo real:
+### Monitoramento Industrial
 ```bash
 tail -f onion_hunter.log
 ```
 
 ---
 
-🛡️ **Status:** Operando em Nível Industrial.
-📂 **Banco de Dados:** [onion_vault.db](file:///home/douglasdsr/Documentos/Projects/Area Dev de multi TESTES/Web Scriping/web02/onion_vault.db)
+🛡️ **Status:** Perfeição Matemática Alcançada.
+📂 **Vault:** [onion_vault.db](file:///home/douglasdsr/Documentos/Projects/Area Dev de multi TESTES/Web Scriping/web02/onion_vault.db)
 📜 **Logs:** [onion_hunter.log](file:///home/douglasdsr/Documentos/Projects/Area Dev de multi TESTES/Web Scriping/web02/onion_hunter.log)

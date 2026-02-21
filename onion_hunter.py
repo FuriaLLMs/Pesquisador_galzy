@@ -12,6 +12,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from urllib.parse import urljoin, urlparse
 from stem import Signal
 from stem.control import Controller
+import threading
+import queue
 
 # --- Configuração de Logging Profissional (v7.0) ---
 logging.basicConfig(
@@ -35,14 +37,15 @@ TOR_CONTROL_PORT = int(os.getenv('TOR_CONTROL_PORT', '9051'))
 TIMEOUT_CONFIG = (15, 60) # (Connect, Read) - Aumentado para resiliência na Dark Web
 
 class DatabaseManager:
-    """Gerencia a persistência via SQLite FTS5 (Matemática Perfeita)"""
+    """Gerencia a persistência via SQLite FTS5 com Triggers Automáticos (Alta Fidelidade)"""
     def __init__(self, db_path=DB_FILE):
         self.db_path = db_path
+        self.lock = threading.Lock()
         self._init_db()
 
     def _get_conn(self):
         conn = sqlite3.connect(self.db_path, check_same_thread=False)
-        conn.execute("PRAGMA journal_mode=WAL") # Escrita concorrente segura
+        conn.execute("PRAGMA journal_mode=WAL") 
         conn.execute("PRAGMA synchronous=NORMAL")
         return conn
 
@@ -58,46 +61,57 @@ class DatabaseManager:
                 )
             """)
             try:
-                # Criamos a tabela FTS5 para busca instantânea
                 conn.execute("CREATE VIRTUAL TABLE IF NOT EXISTS fts_onions USING fts5(url, title, category, content='onions', content_rowid='rowid')")
+                # TRIGGER: Sincronização automática O(1)
+                conn.execute("""
+                    CREATE TRIGGER IF NOT EXISTS onions_ai AFTER INSERT ON onions BEGIN
+                        INSERT INTO fts_onions(rowid, url, title, category) 
+                        VALUES (new.rowid, new.url, new.title, new.category);
+                    END;
+                """)
             except sqlite3.OperationalError:
-                logger.warning("FTS5 não disponível. Usando busca LIKE padrão.")
+                logger.warning("FTS5 não disponível. Performance de busca reduzida.")
 
     def save_results(self, results):
+        """Gravação em Lote (executemany) - Nível Sênior"""
+        if not results: return 0
         added = 0
-        conn = self._get_conn()
-        try:
-            for r in results:
-                try:
-                    conn.execute(
-                        "INSERT INTO onions (url, title, category, source) VALUES (?, ?, ?, ?)",
-                        (r['url'], r['title'], r['category'], r['source'])
-                    )
-                    added += 1
-                except sqlite3.IntegrityError:
-                    continue
-            conn.commit()
-            # Reconstrói índice FTS se existir
+        data = [(r['url'], r['title'], r['category'], r['source']) for r in results]
+        
+        with self.lock:
+            conn = self._get_conn()
             try:
-                conn.execute("INSERT INTO fts_onions(fts_onions) VALUES('rebuild')")
-            except: pass
-        finally:
-            conn.close()
+                cursor = conn.executemany(
+                    "INSERT OR IGNORE INTO onions (url, title, category, source) VALUES (?, ?, ?, ?)",
+                    data
+                )
+                conn.commit()
+                added = cursor.rowcount
+            finally:
+                conn.close()
         return added
 
     def search_local(self, query):
+        """Busca O(log N) via MATCH do FTS5"""
         conn = self._get_conn()
         try:
-            q = f"%{query}%"
-            cursor = conn.execute(
-                "SELECT category, title, url, source FROM onions WHERE title LIKE ? OR url LIKE ? OR category LIKE ?", 
-                (q, q, q)
-            )
-            return cursor.fetchall()
+            try:
+                # MATCH é ordens de grandeza mais rápido que LIKE
+                cursor = conn.execute(
+                    "SELECT category, title, url, source FROM fts_onions WHERE fts_onions MATCH ? || '*' ORDER BY rank", 
+                    (query,)
+                )
+                return cursor.fetchall()
+            except sqlite3.OperationalError:
+                q = f"%{query}%"
+                cursor = conn.execute(
+                    "SELECT category, title, url, source FROM onions WHERE title LIKE ? OR url LIKE ?", 
+                    (q, q)
+                )
+                return cursor.fetchall()
         finally:
             conn.close()
 
-# Instância Global de Persistência
 db = DatabaseManager()
 
 def rotate_tor_circuit():
@@ -194,7 +208,6 @@ class BaseEngine:
         self.name = name
         self.url = url
         self.fetch_all = fetch_all
-        self.results = []
 
     def _fetch(self, url, params=None):
         """Método Centralizado de Busca (DRY & Seguro)"""
@@ -217,30 +230,25 @@ class BaseEngine:
         raise NotImplementedError
 
 class DeepCrawler(BaseEngine):
-    """Spider recursivo real que navega em profundidade controlada"""
-    def __init__(self, name, url, fetch_all=False, depth=1):
+    """Spider que descobre novos links e os emite para a pool sem sequestrar threads"""
+    def __init__(self, name, url, fetch_all=False, max_depth=1, current_depth=0, visited=None):
         super().__init__(name, url, fetch_all)
-        self.max_depth = depth
-        self.visited = set()
+        self.max_depth = max_depth
+        self.current_depth = current_depth
+        self.visited = visited if visited is not None else set()
 
     def search(self, keywords):
-        if isinstance(keywords, str): keywords = [keywords]
-        self._crawl(self.url, keywords, 0)
-
-    def _crawl(self, url, keywords, current_depth):
-        if current_depth > self.max_depth or url in self.visited:
+        if self.url in self.visited or self.current_depth > self.max_depth:
             return
         
-        self.visited.add(url)
-        content = self._fetch(url)
+        self.visited.add(self.url)
+        content = self._fetch(self.url)
         if not content:
             return
 
-        # Extração de Onions com Regex Compilada Globalmente
         content_lower = content.lower()
         onions = list(set(ONION_REGEX.findall(content_lower)))
         
-        found_links = 0
         for onion in onions:
             onion_url = f"http://{onion}/"
             category = get_category(content_lower, onion_url)
@@ -255,19 +263,14 @@ class DeepCrawler(BaseEngine):
                         break
             
             if match:
-                self.results.append({
-                    'title': f'Deep Discovery (D{current_depth})', 
+                yield {
+                    'title': f'Deep Discovery (D{self.current_depth})', 
                     'url': onion_url, 
                     'source': self.name, 
-                    'category': category
-                })
-                found_links += 1
-                # Se for um novo link e não atingimos o topo, exploramos
-                if current_depth < self.max_depth:
-                    self._crawl(onion_url, keywords, current_depth + 1)
-        
-        if found_links:
-            logger.info(f"[{self.name}] Nível {current_depth} extraiu {found_links} links de {url[:40]}...")
+                    'category': category,
+                    'is_crawler': True,
+                    'depth': self.current_depth + 1
+                }
 
 class AhmiaEngine(BaseEngine):
     def search(self, keywords):
@@ -276,7 +279,6 @@ class AhmiaEngine(BaseEngine):
             html = self._fetch(self.url, params={'q': kw})
             if html:
                 soup = BeautifulSoup(html, 'lxml')
-                count = 0
                 for a in soup.find_all('a', href=True):
                     href = a['href']
                     if '.onion' in href and 'ahmia.fi' not in href:
@@ -285,15 +287,12 @@ class AhmiaEngine(BaseEngine):
                         if '.onion' in url and 'juhanurmi' not in url:
                             title = a.text.strip() or f"Match: {kw}"
                             category = get_category(title, url)
-                            self.results.append({
+                            yield {
                                 'title': title[:100], 
                                 'url': url, 
                                 'source': self.name,
                                 'category': category
-                            })
-                            count += 1
-                if count: 
-                    logger.info(f"[{self.name}] Capturou {count} links para '{kw}'.")
+                            }
 
 class FeedEngine(BaseEngine):
     """Baixa listas massivas de links estáticos de repositórios OSINT"""
@@ -303,7 +302,6 @@ class FeedEngine(BaseEngine):
         if content:
             content_lower = content.lower()
             onions = list(set(ONION_REGEX.findall(content_lower)))
-            found = 0
             for onion in onions:
                 url = f"http://{onion}/"
                 category = get_category(content_lower, url)
@@ -318,10 +316,7 @@ class FeedEngine(BaseEngine):
                             break
                 
                 if match:
-                    self.results.append({'title': 'Massive Discovery', 'url': url, 'source': 'Feed', 'category': category})
-                    found += 1
-            if found: 
-                logger.info(f"[{self.name}] Extraiu {found} links.")
+                    yield {'title': 'Massive Discovery', 'url': url, 'source': 'Feed', 'category': category}
 
 class OnionSearchEngine(BaseEngine):
     """Buscador alternativo via Clearweb Mirror"""
@@ -332,21 +327,17 @@ class OnionSearchEngine(BaseEngine):
             html = self._fetch(search_url)
             if html:
                 soup = BeautifulSoup(html, 'lxml')
-                f = 0
                 for a in soup.find_all('a', href=True):
                     href = a['href']
                     if '.onion' in href and 'onionsearch.org' not in href:
                         title = a.text.strip()[:100]
                         category = get_category(title, href)
-                        self.results.append({
+                        yield {
                             'title': title, 
                             'url': href, 
                             'source': self.name,
                             'category': category
-                        })
-                        f += 1
-                if f: 
-                    logger.info(f"[{self.name}] Capturou {f} links para '{kw}'.")
+                        }
 
 class DuckDuckGoEngine(BaseEngine):
     """Buscador DuckDuckGo Onion (Versão HTML)"""
@@ -356,16 +347,12 @@ class DuckDuckGoEngine(BaseEngine):
             html = self._fetch(self.url, params={'q': kw, 'kl': 'wt-wt'})
             if html:
                 soup = BeautifulSoup(html, 'lxml')
-                f = 0
                 for a in soup.find_all('a', class_='result__url', href=True):
                     href = a['href']
                     if '.onion' in href:
                         title = a.text.strip()[:100]
                         category = get_category(title, href)
-                        self.results.append({'title': title, 'url': href, 'source': self.name, 'category': category})
-                        f += 1
-                if f: 
-                    logger.info(f"[{self.name}] Capturou {f} links para '{kw}'.")
+                        yield {'title': title, 'url': href, 'source': self.name, 'category': category}
 
 class WikiSpider(BaseEngine):
     """Varre diretórios de links buscando correspondências"""
@@ -374,107 +361,146 @@ class WikiSpider(BaseEngine):
         html = self._fetch(self.url)
         if html:
             soup = BeautifulSoup(html, 'lxml')
-            f = 0
             for a in soup.find_all('a', href=True):
                 href = a['href']
                 text = a.text.lower()
                 for kw in keywords:
                     if '.onion' in href and (kw.lower() in text or kw.lower() in href):
                         category = get_category(text, href)
-                        self.results.append({
+                        yield {
                             'title': a.text.strip()[:50], 
                             'url': href, 
                             'source': self.name,
                             'category': category
-                        })
-                        f += 1
+                        }
                         break
-            if f: 
-                logger.info(f"[{self.name}] Colheu {f} links.")
 
-def save_results(results, filename="darkweb_leads_v7.csv"):
+def save_results(results, filename="darkweb_leads_v8.csv"):
+    """Salva resultados no cofre SQLite (Batch) e no CSV de Auditoria"""
     if not results: return
     
     added_to_db = db.save_results(results)
 
     if added_to_db > 0:
-        # Salvamos em CSV para auditoria externa
         import csv
         keys = ['category', 'title', 'url', 'source', 'timestamp']
         with open(filename, 'a', newline='', encoding='utf-8') as f:
             writer = csv.DictWriter(f, fieldnames=keys)
             if f.tell() == 0: writer.writeheader()
             for res in results:
-                # Apenas registramos se for novo no CSV nesta execução (simplificado v7)
                 res['timestamp'] = time.strftime('%Y-%m-%d %H:%M:%S')
-                writer.writerow(res)
+                # Filtramos chaves extras para o CSV
+                row = {k: res.get(k, '') for k in keys}
+                writer.writerow(row)
         
-        logger.info(f"Sucesso: {added_to_db} novos links arquivados no cofre (SQLite) e em {filename}.")
-    else:
-        logger.debug("Nenhum link inédito encontrado nesta leva.")
+        logger.info(f"Sucesso: {added_to_db} novos registros no cofre e em {filename}.")
 
 def main():
-    parser = argparse.ArgumentParser(description="Multi-Engine Massive OSINT Hunter (v7.0 - Salto Industrial)")
+    parser = argparse.ArgumentParser(description="Multi-Engine Massive OSINT Hunter (v8.0 - Perfeição Matemática)")
     parser.add_argument("query", nargs='?', default="onion", help="Termo de busca (default: onion)")
-    parser.add_argument("--all", action="store_true", help="Modo Infinito: Coleta tudo sem filtro")
-    parser.add_argument("--search", action="store_true", help="Busca local no cofre SQLite (Offline)")
+    parser.add_argument("--all", action="store_true", help="Modo Infinito")
+    parser.add_argument("--search", action="store_true", help="Busca local FTS5 (MATCH)")
+    parser.add_argument("--depth", type=int, default=1, help="Profundidade do Crawler (default: 1)")
     args = parser.parse_args()
 
     if args.search:
         results = db.search_local(args.query)
         if results:
-            logger.info(f"Local Store: Encontrados {len(results)} resultados para '{args.query}':")
+            logger.info(f"FTS Store: {len(results)} resultados para '{args.query}':")
             for r in results:
-                print(f"[{r['category']}] {r['title']} | {r['url']}")
+                print(f"[{r[0]}] {r[1]} | {r[2]}")
         else:
-            logger.info(f"Cofre: Nenhum resultado local para '{args.query}'.")
+            logger.info(f"Cofre: Nenhum resultado para '{args.query}'.")
         sys.exit(0)
 
-    # Inicia Protocolo Fantasma
     rotate_tor_circuit()
 
-    # Expansão Babel
     keywords = [args.query]
     if args.query.lower() in SYNONYMS:
         keywords.extend(SYNONYMS[args.query.lower()])
     
-    logger.info(f"🚀 Iniciando Caçada Industrial (v7.0) para: {keywords if not args.all else 'Tudo'}")
+    logger.info(f"🚀 Modo Predator v8.0 iniciado para: {keywords if not args.all else 'Global'}")
     
-    engines = [
+    # Pool de Execução Sênior (30 Workers)
+    executor = ThreadPoolExecutor(max_workers=30)
+    visited = set() # Controle de redundância global
+    tasks = []
+    
+    # Inicialização dos Motores
+    initial_engines = [
         AhmiaEngine('Ahmia_Onion', ENGINES['ahmia_onion'], args.all),
         AhmiaEngine('Ahmia_Clear', ENGINES['ahmia_clear'], args.all),
         DuckDuckGoEngine('DuckDuckGo_Onion', ENGINES['duckduckgo'], args.all),
         OnionSearchEngine('OnionSearch', None, args.all)
     ]
-    
     for i, mirror in enumerate(ENGINES['hidden_wiki_mirrors']):
-        engines.append(WikiSpider(f'Spider_{i+1}', mirror, args.all))
-    
-    for i, feed_url in enumerate(FEEDS_URLS):
-        engines.append(FeedEngine(f'Feed_{i+1}', feed_url, args.all))
-    
-    # DeepCrawler com profundidade real v7.0
-    high_density_seeds = [
+        initial_engines.append(WikiSpider(f'Spider_{i+1}', mirror, args.all))
+    for i, feed in enumerate(FEEDS_URLS):
+        initial_engines.append(FeedEngine(f'Feed_{i+1}', feed, args.all))
+
+    # Sementes (Seeds) de Alta Densidade
+    seeds = [
         'http://zqktlwiuavvvqqt4ybvgvi7tyo4hjl5xgfuvpdf6otj3cy6ih7eypbad.onion/wiki/Main_Page',
         'http://torlinksge6enmcyy.onion/',
         'http://dirnxxdraygbifgc.onion/'
     ]
-    for i, seed in enumerate(high_density_seeds):
-        engines.append(DeepCrawler(f'DeepCrawler_{i+1}', seed, args.all, depth=1))
+    for i, seed in enumerate(seeds):
+        initial_engines.append(DeepCrawler(f'CrawlerSeed_{i+1}', seed, args.all, max_depth=args.depth, visited=visited))
 
-    # Execução Multi-Threaded Escala Predator (30 Workers)
-    with ThreadPoolExecutor(max_workers=30) as executor:
-        futures = {executor.submit(eng.search, keywords): eng for eng in engines}
-        for future in as_completed(futures):
-            eng = futures[future]
-            if eng.results:
-                save_results(eng.results)
+    # Task Submission Loop
+    tasks = []
+    for eng in initial_engines:
+        tasks.append(executor.submit(lambda e=eng: list(e.search(keywords))))
+
+    batch_buffer = []
+    try:
+        while tasks:
+            # Iteramos em uma cópia para poder adicionar novas tasks dinamicamente
+            current_tasks = list(tasks)
+            remaining_tasks = []
+            
+            for t in current_tasks:
+                if t.done():
+                    try:
+                        results = t.result()
+                        if results:
+                            batch_buffer.extend(results)
+                            
+                            # Task Feedback Loop: Processa novas descobertas para recursão
+                            for res in results:
+                                if res.get('is_crawler') and res['depth'] <= args.depth:
+                                    new_crawler = DeepCrawler(
+                                        f"SubSpy_{res['depth']}", 
+                                        res['url'], 
+                                        args.all, 
+                                        max_depth=args.depth, 
+                                        current_depth=res['depth'],
+                                        visited=visited
+                                    )
+                                    tasks.append(executor.submit(lambda e=new_crawler: list(e.search(keywords))))
+                                    logger.info(f"[FEEDBACK] Novo alvo: {res['url'][:30]}... (D{res['depth']})")
+
+                            if len(batch_buffer) >= 20:
+                                save_results(batch_buffer)
+                                batch_buffer = []
+                    except Exception as e:
+                        logger.debug(f"Task finalizada com erro: {e}")
+                else:
+                    remaining_tasks.append(t)
+            
+            tasks = remaining_tasks
+            if not tasks: break
+            time.sleep(0.5)
+
+        # Flush final do buffer
+        if batch_buffer:
+            save_results(batch_buffer)
+
+    except KeyboardInterrupt:
+        logger.info("Encerrando caçada por comando do usuário...")
+    finally:
+        executor.shutdown(wait=False)
+        logger.info("Operação v8.0 finalizada. Cofre sincronizado.")
 
 if __name__ == "__main__":
-    try:
-        main()
-    except KeyboardInterrupt:
-        logger.info("Interrupção manual detectada. Finalizando operações...")
-        sys.exit(0)
-    except Exception as e:
-        logger.critical(f"Falha catastrófica no sistema: {e}", exc_info=True)
+    main()

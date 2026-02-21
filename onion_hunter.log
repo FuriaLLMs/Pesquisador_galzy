@@ -1,1 +1,87 @@
 2026-02-21 20:26:02,873 [INFO] OnionHunter: Cofre: Nenhum resultado local para 'onion'.
+2026-02-21 20:27:54,016 [INFO] OnionHunter: 🚀 Iniciando Caçada Industrial (v7.0) para: ['armas', 'weapons', 'firearms', 'guns', 'pistol', 'rifle', 'munition', 'armament', 'оружие', 'пистолет', 'винтовка', 'боеприпасы', '武器', '枪', '步枪', '弹药', 'أسلحة', 'مسدس', 'بندقية', 'ذخيرة', 'armas de fuego', 'pistola', 'fusil', 'munición', 'armes', 'pistolet', 'fusil', 'munitions']
+2026-02-21 20:34:12,206 [INFO] OnionHunter: Cofre: Nenhum resultado para 'bitcoin'.
+2026-02-21 20:34:31,634 [INFO] OnionHunter: 🚀 Modo Predator v8.0 iniciado para: ['armas', 'weapons', 'firearms', 'guns', 'pistol', 'rifle', 'munition', 'armament', 'оружие', 'пистолет', 'винтовка', 'боеприпасы', '武器', '枪', '步枪', '弹药', 'أسلحة', 'مسدس', 'بندقية', 'ذخيرة', 'armas de fuego', 'pistola', 'fusil', 'munición', 'armes', 'pistolet', 'fusil', 'munitions']
+2026-02-21 20:35:40,659 [INFO] OnionHunter: Operação v8.0 finalizada. Cofre sincronizado.
+2026-02-21 20:36:03,186 [DEBUG] OnionHunter: Não foi possível renovar o circuito Tor: [Errno 111] Connection refused
+2026-02-21 20:36:03,186 [INFO] OnionHunter: 🚀 Modo Predator v8.0 iniciado para: ['onion']
+2026-02-21 20:36:04,349 [DEBUG] OnionHunter: Falha na rede Tor para Feed_4 (https://raw.githubusercontent.com/pali-justin/Dark-Web-Links/master/Dark-Web-Links.md): Missing dependencies for SOCKS support.
+2026-02-21 20:36:04,411 [DEBUG] OnionHunter: Falha na rede Tor para Feed_10 (https://raw.githubusercontent.com/S-9/Secret_Deep_Web_Links/master/Secret_Deep_Web_Links.md): Missing dependencies for SOCKS support.
+2026-02-21 20:36:04,428 [DEBUG] OnionHunter: Falha na rede Tor para Feed_6 (https://raw.githubusercontent.com/billytheking/Onion-Links/master/links.txt): Missing dependencies for SOCKS support.
+2026-02-21 20:36:04,641 [DEBUG] OnionHunter: Falha na rede Tor para Feed_8 (https://raw.githubusercontent.com/not-not-evil/onion-links/main/links.txt): Missing dependencies for SOCKS support.
+2026-02-21 20:36:04,983 [DEBUG] OnionHunter: Falha na rede Tor para OnionSearch (https://onionsearch.org/search?q=onion): Missing dependencies for SOCKS support.
+2026-02-21 20:36:05,018 [DEBUG] OnionHunter: Falha na rede Tor para Feed_2 (https://raw.githubusercontent.com/MTXPr0ject/Dark-Web-Links/refs/heads/main/README.md): Missing dependencies for SOCKS support.
+2026-02-21 20:36:05,027 [DEBUG] OnionHunter: Falha na rede Tor para Spider_2 (http://onionlinksy7q6ieitv52v3on73g37x7q6ieitv52v3on73g37x7q6ie.onion/): Missing dependencies for SOCKS support.
+2026-02-21 20:36:05,126 [DEBUG] OnionHunter: Falha na rede Tor para Feed_9 (https://raw.githubusercontent.com/alecmuffett/real-world-onion-sites/master/README.md): Missing dependencies for SOCKS support.
+2026-02-21 20:36:05,196 [DEBUG] OnionHunter: Falha na rede Tor para Spider_4 (http://dirnxxdraygbifgc.onion/): Missing dependencies for SOCKS support.
+2026-02-21 20:36:05,217 [DEBUG] OnionHunter: Falha na rede Tor para Feed_3 (https://gist.githubusercontent.com/mvelazc0/23249033f99e691238d2/raw/hidden_services_urls.txt): Missing dependencies for SOCKS support.
+2026-02-21 20:36:05,266 [DEBUG] OnionHunter: Falha na rede Tor para DuckDuckGo_Onion (https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfima3ogsn36cyq6wiid.onion/html/): Missing dependencies for SOCKS support.
+2026-02-21 20:36:05,498 [DEBUG] OnionHunter: Falha na rede Tor para CrawlerSeed_3 (http://dirnxxdraygbifgc.onion/): Missing dependencies for SOCKS support.
+2026-02-21 20:36:05,585 [DEBUG] OnionHunter: Falha na rede Tor para CrawlerSeed_1 (http://zqktlwiuavvvqqt4ybvgvi7tyo4hjl5xgfuvpdf6otj3cy6ih7eypbad.onion/wiki/Main_Page): Missing dependencies for SOCKS support.
+2026-02-21 20:36:05,602 [DEBUG] OnionHunter: Falha na rede Tor para Feed_1 (https://raw.githubusercontent.com/nemo-nesciam/2024.onion.links/main/Hidden-Wiki.txt): Missing dependencies for SOCKS support.
+2026-02-21 20:36:05,654 [DEBUG] OnionHunter: Falha na rede Tor para Feed_5 (https://raw.githubusercontent.com/fastfire/deep-dark-quotes/master/README.md): Missing dependencies for SOCKS support.
+2026-02-21 20:36:06,153 [DEBUG] OnionHunter: Falha na rede Tor para Ahmia_Onion (http://juhanurmihxlp77nkq76byazcldy2hlmovfu2epvl5ankdibsot4csyd.onion/search/): Missing dependencies for SOCKS support.
+2026-02-21 20:36:06,244 [DEBUG] OnionHunter: Falha na rede Tor para Feed_7 (https://raw.githubusercontent.com/v2ray/domain-list-community/master/data/onion): Missing dependencies for SOCKS support.
+2026-02-21 20:36:06,326 [DEBUG] OnionHunter: Falha na rede Tor para Spider_3 (http://torlinksge6enmcyy.onion/): Missing dependencies for SOCKS support.
+2026-02-21 20:36:06,369 [DEBUG] OnionHunter: Falha na rede Tor para Spider_1 (http://zqktlwiuavvvqqt4ybvgvi7tyo4hjl5xgfuvpdf6otj3cy6ih7eypbad.onion/wiki/Main_Page): Missing dependencies for SOCKS support.
+2026-02-21 20:36:06,393 [DEBUG] OnionHunter: Falha na rede Tor para CrawlerSeed_2 (http://torlinksge6enmcyy.onion/): Missing dependencies for SOCKS support.
+2026-02-21 20:36:06,607 [DEBUG] OnionHunter: Falha na rede Tor para Ahmia_Clear (https://ahmia.fi/search/): Missing dependencies for SOCKS support.
+2026-02-21 20:36:06,692 [INFO] OnionHunter: Operação v8.0 finalizada. Cofre sincronizado.
+2026-02-21 20:36:25,652 [DEBUG] OnionHunter: Não foi possível renovar o circuito Tor: [Errno 111] Connection refused
+2026-02-21 20:36:25,652 [INFO] OnionHunter: 🚀 Modo Predator v8.0 iniciado para: ['onion']
+2026-02-21 20:36:27,038 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): torlinksge6enmcyy.onion:80
+2026-02-21 20:36:27,039 [DEBUG] OnionHunter: Falha na rede Tor para Spider_3 (http://torlinksge6enmcyy.onion/): SOCKSHTTPConnectionPool(host='torlinksge6enmcyy.onion', port=80): Max retries exceeded with url: / (Caused by NewConnectionError("SOCKSConnection(host='torlinksge6enmcyy.onion', port=80): Failed to establish a new connection: 0x01: General SOCKS server failure"))
+2026-02-21 20:36:27,248 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): raw.githubusercontent.com:443
+2026-02-21 20:36:27,263 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): zqktlwiuavvvqqt4ybvgvi7tyo4hjl5xgfuvpdf6otj3cy6ih7eypbad.onion:80
+2026-02-21 20:36:27,265 [DEBUG] OnionHunter: Falha na rede Tor para Spider_1 (http://zqktlwiuavvvqqt4ybvgvi7tyo4hjl5xgfuvpdf6otj3cy6ih7eypbad.onion/wiki/Main_Page): SOCKSHTTPConnectionPool(host='zqktlwiuavvvqqt4ybvgvi7tyo4hjl5xgfuvpdf6otj3cy6ih7eypbad.onion', port=80): Max retries exceeded with url: /wiki/Main_Page (Caused by NewConnectionError("SOCKSConnection(host='zqktlwiuavvvqqt4ybvgvi7tyo4hjl5xgfuvpdf6otj3cy6ih7eypbad.onion', port=80): Failed to establish a new connection: 0x01: General SOCKS server failure"))
+2026-02-21 20:36:27,281 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): gist.githubusercontent.com:443
+2026-02-21 20:36:27,333 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): raw.githubusercontent.com:443
+2026-02-21 20:36:27,401 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): raw.githubusercontent.com:443
+2026-02-21 20:36:27,438 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): duckduckgogg42xjoc72x3sjasowoarfbgcmvfima3ogsn36cyq6wiid.onion:443
+2026-02-21 20:36:27,439 [DEBUG] OnionHunter: Falha na rede Tor para DuckDuckGo_Onion (https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfima3ogsn36cyq6wiid.onion/html/): SOCKSHTTPSConnectionPool(host='duckduckgogg42xjoc72x3sjasowoarfbgcmvfima3ogsn36cyq6wiid.onion', port=443): Max retries exceeded with url: /html/?q=onion&kl=wt-wt (Caused by NewConnectionError("SOCKSHTTPSConnection(host='duckduckgogg42xjoc72x3sjasowoarfbgcmvfima3ogsn36cyq6wiid.onion', port=443): Failed to establish a new connection: 0x01: General SOCKS server failure"))
+2026-02-21 20:36:27,519 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): raw.githubusercontent.com:443
+2026-02-21 20:36:27,549 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): zqktlwiuavvvqqt4ybvgvi7tyo4hjl5xgfuvpdf6otj3cy6ih7eypbad.onion:80
+2026-02-21 20:36:27,550 [DEBUG] OnionHunter: Falha na rede Tor para CrawlerSeed_1 (http://zqktlwiuavvvqqt4ybvgvi7tyo4hjl5xgfuvpdf6otj3cy6ih7eypbad.onion/wiki/Main_Page): SOCKSHTTPConnectionPool(host='zqktlwiuavvvqqt4ybvgvi7tyo4hjl5xgfuvpdf6otj3cy6ih7eypbad.onion', port=80): Max retries exceeded with url: /wiki/Main_Page (Caused by NewConnectionError("SOCKSConnection(host='zqktlwiuavvvqqt4ybvgvi7tyo4hjl5xgfuvpdf6otj3cy6ih7eypbad.onion', port=80): Failed to establish a new connection: 0x01: General SOCKS server failure"))
+2026-02-21 20:36:27,579 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): raw.githubusercontent.com:443
+2026-02-21 20:36:27,699 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): raw.githubusercontent.com:443
+2026-02-21 20:36:27,866 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): dirnxxdraygbifgc.onion:80
+2026-02-21 20:36:27,868 [DEBUG] OnionHunter: Falha na rede Tor para Spider_4 (http://dirnxxdraygbifgc.onion/): SOCKSHTTPConnectionPool(host='dirnxxdraygbifgc.onion', port=80): Max retries exceeded with url: / (Caused by NewConnectionError("SOCKSConnection(host='dirnxxdraygbifgc.onion', port=80): Failed to establish a new connection: 0x01: General SOCKS server failure"))
+2026-02-21 20:36:28,142 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): torlinksge6enmcyy.onion:80
+2026-02-21 20:36:28,143 [DEBUG] OnionHunter: Falha na rede Tor para CrawlerSeed_2 (http://torlinksge6enmcyy.onion/): SOCKSHTTPConnectionPool(host='torlinksge6enmcyy.onion', port=80): Max retries exceeded with url: / (Caused by NewConnectionError("SOCKSConnection(host='torlinksge6enmcyy.onion', port=80): Failed to establish a new connection: 0x01: General SOCKS server failure"))
+2026-02-21 20:36:28,180 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): dirnxxdraygbifgc.onion:80
+2026-02-21 20:36:28,181 [DEBUG] OnionHunter: Falha na rede Tor para CrawlerSeed_3 (http://dirnxxdraygbifgc.onion/): SOCKSHTTPConnectionPool(host='dirnxxdraygbifgc.onion', port=80): Max retries exceeded with url: / (Caused by NewConnectionError("SOCKSConnection(host='dirnxxdraygbifgc.onion', port=80): Failed to establish a new connection: 0x01: General SOCKS server failure"))
+2026-02-21 20:36:28,480 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): ahmia.fi:443
+2026-02-21 20:36:28,673 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): onionsearch.org:443
+2026-02-21 20:36:28,913 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): onionlinksy7q6ieitv52v3on73g37x7q6ieitv52v3on73g37x7q6ie.onion:80
+2026-02-21 20:36:28,914 [DEBUG] OnionHunter: Falha na rede Tor para Spider_2 (http://onionlinksy7q6ieitv52v3on73g37x7q6ieitv52v3on73g37x7q6ie.onion/): SOCKSHTTPConnectionPool(host='onionlinksy7q6ieitv52v3on73g37x7q6ieitv52v3on73g37x7q6ie.onion', port=80): Max retries exceeded with url: / (Caused by NewConnectionError("SOCKSConnection(host='onionlinksy7q6ieitv52v3on73g37x7q6ieitv52v3on73g37x7q6ie.onion', port=80): Failed to establish a new connection: 0x01: General SOCKS server failure"))
+2026-02-21 20:36:28,933 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): raw.githubusercontent.com:443
+2026-02-21 20:36:28,936 [DEBUG] urllib3.connectionpool: https://raw.githubusercontent.com:443 "GET /fastfire/deep-dark-quotes/master/README.md HTTP/1.1" 404 14
+2026-02-21 20:36:29,067 [DEBUG] urllib3.connectionpool: Starting new HTTP connection (1): juhanurmihxlp77nkq76byazcldy2hlmovfu2epvl5ankdibsot4csyd.onion:80
+2026-02-21 20:36:29,076 [DEBUG] OnionHunter: Falha na rede Tor para Feed_5 (https://raw.githubusercontent.com/fastfire/deep-dark-quotes/master/README.md): 404 Client Error: Not Found for url: https://raw.githubusercontent.com/fastfire/deep-dark-quotes/master/README.md
+2026-02-21 20:36:29,083 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): raw.githubusercontent.com:443
+2026-02-21 20:36:29,156 [DEBUG] urllib3.connectionpool: Starting new HTTPS connection (1): raw.githubusercontent.com:443
+2026-02-21 20:36:29,281 [DEBUG] urllib3.connectionpool: https://raw.githubusercontent.com:443 "GET /MTXPr0ject/Dark-Web-Links/refs/heads/main/README.md HTTP/1.1" 200 4367
+2026-02-21 20:36:29,435 [DEBUG] urllib3.connectionpool: https://gist.githubusercontent.com:443 "GET /mvelazc0/23249033f99e691238d2/raw/hidden_services_urls.txt HTTP/1.1" 404 14
+2026-02-21 20:36:29,436 [DEBUG] OnionHunter: Falha na rede Tor para Feed_3 (https://gist.githubusercontent.com/mvelazc0/23249033f99e691238d2/raw/hidden_services_urls.txt): 404 Client Error: Not Found for url: https://gist.githubusercontent.com/mvelazc0/23249033f99e691238d2/raw/hidden_services_urls.txt
+2026-02-21 20:36:29,436 [DEBUG] urllib3.connectionpool: https://raw.githubusercontent.com:443 "GET /billytheking/Onion-Links/master/links.txt HTTP/1.1" 404 14
+2026-02-21 20:36:29,437 [DEBUG] OnionHunter: Falha na rede Tor para Feed_6 (https://raw.githubusercontent.com/billytheking/Onion-Links/master/links.txt): 404 Client Error: Not Found for url: https://raw.githubusercontent.com/billytheking/Onion-Links/master/links.txt
+2026-02-21 20:36:29,438 [DEBUG] urllib3.connectionpool: https://raw.githubusercontent.com:443 "GET /S-9/Secret_Deep_Web_Links/master/Secret_Deep_Web_Links.md HTTP/1.1" 404 14
+2026-02-21 20:36:29,438 [DEBUG] urllib3.connectionpool: https://raw.githubusercontent.com:443 "GET /v2ray/domain-list-community/master/data/onion HTTP/1.1" 404 14
+2026-02-21 20:36:29,439 [DEBUG] OnionHunter: Falha na rede Tor para Feed_7 (https://raw.githubusercontent.com/v2ray/domain-list-community/master/data/onion): 404 Client Error: Not Found for url: https://raw.githubusercontent.com/v2ray/domain-list-community/master/data/onion
+2026-02-21 20:36:29,439 [DEBUG] OnionHunter: Falha na rede Tor para Feed_10 (https://raw.githubusercontent.com/S-9/Secret_Deep_Web_Links/master/Secret_Deep_Web_Links.md): 404 Client Error: Not Found for url: https://raw.githubusercontent.com/S-9/Secret_Deep_Web_Links/master/Secret_Deep_Web_Links.md
+2026-02-21 20:36:29,539 [DEBUG] urllib3.connectionpool: https://raw.githubusercontent.com:443 "GET /pali-justin/Dark-Web-Links/master/Dark-Web-Links.md HTTP/1.1" 404 14
+2026-02-21 20:36:29,540 [DEBUG] OnionHunter: Falha na rede Tor para Feed_4 (https://raw.githubusercontent.com/pali-justin/Dark-Web-Links/master/Dark-Web-Links.md): 404 Client Error: Not Found for url: https://raw.githubusercontent.com/pali-justin/Dark-Web-Links/master/Dark-Web-Links.md
+2026-02-21 20:36:29,666 [INFO] OnionHunter: Sucesso: 69 novos registros no cofre e em darkweb_leads_v8.csv.
+2026-02-21 20:36:30,412 [DEBUG] OnionHunter: Falha na rede Tor para OnionSearch (https://onionsearch.org/search?q=onion): SOCKSHTTPSConnectionPool(host='onionsearch.org', port=443): Max retries exceeded with url: /search?q=onion (Caused by NewConnectionError("SOCKSHTTPSConnection(host='onionsearch.org', port=443): Failed to establish a new connection: 0x04: Host unreachable"))
+2026-02-21 20:36:30,621 [DEBUG] urllib3.connectionpool: https://ahmia.fi:443 "GET /search/?q=onion HTTP/1.1" 302 0
+2026-02-21 20:36:30,693 [DEBUG] urllib3.connectionpool: https://raw.githubusercontent.com:443 "GET /not-not-evil/onion-links/main/links.txt HTTP/1.1" 404 14
+2026-02-21 20:36:30,694 [DEBUG] OnionHunter: Falha na rede Tor para Feed_8 (https://raw.githubusercontent.com/not-not-evil/onion-links/main/links.txt): 404 Client Error: Not Found for url: https://raw.githubusercontent.com/not-not-evil/onion-links/main/links.txt
+2026-02-21 20:36:30,825 [DEBUG] urllib3.connectionpool: https://raw.githubusercontent.com:443 "GET /nemo-nesciam/2024.onion.links/main/Hidden-Wiki.txt HTTP/1.1" 404 14
+2026-02-21 20:36:30,826 [DEBUG] OnionHunter: Falha na rede Tor para Feed_1 (https://raw.githubusercontent.com/nemo-nesciam/2024.onion.links/main/Hidden-Wiki.txt): 404 Client Error: Not Found for url: https://raw.githubusercontent.com/nemo-nesciam/2024.onion.links/main/Hidden-Wiki.txt
+2026-02-21 20:36:31,042 [DEBUG] urllib3.connectionpool: https://ahmia.fi:443 "GET / HTTP/1.1" 200 None
+2026-02-21 20:36:31,127 [DEBUG] urllib3.connectionpool: https://raw.githubusercontent.com:443 "GET /alecmuffett/real-world-onion-sites/master/README.md HTTP/1.1" 200 24873
+2026-02-21 20:36:31,673 [INFO] OnionHunter: Sucesso: 66 novos registros no cofre e em darkweb_leads_v8.csv.
+2026-02-21 20:36:41,394 [INFO] OnionHunter: Cofre: Nenhum resultado para 'link'.
+2026-02-21 20:36:44,070 [DEBUG] OnionHunter: Falha na rede Tor para Ahmia_Onion (http://juhanurmihxlp77nkq76byazcldy2hlmovfu2epvl5ankdibsot4csyd.onion/search/): SOCKSHTTPConnectionPool(host='juhanurmihxlp77nkq76byazcldy2hlmovfu2epvl5ankdibsot4csyd.onion', port=80): Max retries exceeded with url: /search/?q=onion (Caused by ConnectTimeoutError(<SOCKSConnection(host='juhanurmihxlp77nkq76byazcldy2hlmovfu2epvl5ankdibsot4csyd.onion', port=80) at 0x7f3ee5622c30>, 'Connection to juhanurmihxlp77nkq76byazcldy2hlmovfu2epvl5ankdibsot4csyd.onion timed out. (connect timeout=15)'))
+2026-02-21 20:36:44,177 [INFO] OnionHunter: Operação v8.0 finalizada. Cofre sincronizado.
+2026-02-21 20:36:53,356 [INFO] OnionHunter: FTS Store: 135 resultados para 'Massive':

@@ -1,33 +1,44 @@
-# Walkthrough: Arquitetura de Elite Dark Web (v6.0 - Protocolo Fantasma)
+# Walkthrough: Arquitetura Industrial "Salto Industrial" (v7.0)
 
-Elevamos a ferramenta ao padrão **industrial** de engenharia de busca e anonimato avançado.
+Alcançamos a **Perfeição Matemática** na engenharia de busca OSINT. Esta versão transforma o Onion Hunter em um sistema de banco de dados robusto e de alta performance.
 
-## 1. Segurança e Anonimato Elite
-- **Protocolo Fantasma (Circuit Rotation):** O script agora usa a biblioteca `stem` para rotacionar o circuito Tor (IP) automaticamente, tornando o rastreamento quase impossível.
-- **Ofuscação Dinâmica:** Cada requisição utiliza um `User-Agent` diferente e introduz *jitter* (atrasos aleatórios) para simular o comportamento de um usuário real.
-- **Isolamento Profissional:** O projeto agora utiliza **Poetry** para gerenciar dependências complexas e garantir um ambiente de execução imutável.
+## 1. Persistência de Elite (SQLite FTS5)
+- **Cofre SQLite:** Substituímos o JSON por uma base de dados relacional com **WAL (Write-Ahead Logging)** habilitado.
+- **Busca Instantânea:** O motor de busca offline agora utiliza indexação **FTS5**, permitindo pesquisar milhões de registros em milissegundos.
+- **Integridade:** Gravação atômica que evita corrupção de dados sob carga massiva.
 
-## 2. Motor de Busca de Segunda Geração
-- **Busca Offline (FTS):** Você pode pesquisar em sua base de conhecimento local instantaneamente sem precisar se conectar à rede Tor.
-- **Crawler Predator:** Descobre links recursivamente em profundidade.
-- **Categorização Automática:** Classificação inteligente em Armamento, Financeiro, Narcóticos, etc.
+## 2. Otimização de Performance Bruta
+- **Parsing lxml:** Migramos para o parser `lxml` escrito em C, ordens de grandeza mais rápido que o `html.parser` padrão.
+- **Regex Operacional:** Expressões regulares agora são pré-compiladas globalmente, otimizando o gasto de CPU no `DeepCrawler`.
+- **BaseEngine DRY:** Centralização de toda a lógica de rede, anonimato e jitter em um único ponto, garantindo que 100% do tráfego siga o protocolo de segurança.
 
-## 3. Como Operar (Comandos v6.0)
+## 3. Monitoramento e Resiliência
+- **Logging Profissional:** Implementamos a biblioteca `logging`. Erros não são mais "engolidos", mas registrados em `onion_hunter.log` com detalhes técnicos.
+- **Recursive Queue:** O `DeepCrawler` agora realiza recursão real, seguindo links em profundidade controlada de forma inteligente.
 
-### Varredura Global (Online)
-Busca multi-idioma com rotação de IPs e ofuscação:
+---
+
+## 🚀 Como Operar a v7.0
+
+### Caçada Industrial (Online)
 ```bash
-python3 onion_hunter.py "armas"
+poetry run python onion_hunter.py "armas"
 ```
 
-### Busca Local / Offline (FTS)
-Pesquise no que já foi coletado sem usar internet:
+### Pesquisa no Cofre (Offline)
+Busca ultra-rápida no que já foi coletado:
 ```bash
-python3 onion_hunter.py "termo" --search
+poetry run python onion_hunter.py "bitcoin" --search
 ```
 
-## 4. Gerenciamento de Inteligência
-- **[onion_knowledge_base.json](file:///home/douglasdsr/Documentos/Projects/Area Dev de multi TESTES/Web Scriping/web02/onion_knowledge_base.json):** Banco de dados estruturado com FTS.
-- **[darkweb_leads_v5.csv](file:///home/douglasdsr/Documentos/Projects/Area Dev de multi TESTES/Web Scriping/web02/darkweb_leads_v5.csv):** Relatório de entrega categorizado.
+### Logs de Auditoria
+Acompanhe os logs em tempo real:
+```bash
+tail -f onion_hunter.log
+```
 
-🛡️ *Este é o estado da arte em descoberta OSINT na Dark Web.*
+---
+
+🛡️ **Status:** Operando em Nível Industrial.
+📂 **Banco de Dados:** [onion_vault.db](file:///home/douglasdsr/Documentos/Projects/Area Dev de multi TESTES/Web Scriping/web02/onion_vault.db)
+📜 **Logs:** [onion_hunter.log](file:///home/douglasdsr/Documentos/Projects/Area Dev de multi TESTES/Web Scriping/web02/onion_hunter.log)

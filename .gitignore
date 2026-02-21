@@ -1,0 +1,20 @@
+# OSINT Data
+*.csv
+*.json
+!pyproject.toml
+!poetry.lock
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+.env
+
+# Poetry
+.python-version
+
+# System
+.DS_Store

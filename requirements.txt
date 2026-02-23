@@ -1,0 +1,32 @@
+# Denpendências para Onion Hunter Pro
+
+# Core & Async
+asyncio
+aiohttp
+aioredis
+pydantic
+
+# L1 & L2: Crawler
+beautifulsoup4
+requests
+robotsman # Robots.txt management
+
+# L3: Normalization
+readability-lxml
+html2text
+langdetect
+
+# L4 & L5: AI/Semantics
+sentence-transformers
+numpy
+scikit-learn
+hdbscan
+
+# L6: Storage
+psycopg2-binary
+elasticsearch
+
+# CLI & Utils
+click
+colorama
+python-dotenv

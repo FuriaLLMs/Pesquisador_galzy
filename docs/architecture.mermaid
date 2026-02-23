@@ -1,0 +1,36 @@
+graph TD
+    subgraph "Camada 1: Descoberta"
+        A[Fontes Semente] --> B[Seed Manager]
+    end
+
+    subgraph "Camada 2: Crawler Distribuído"
+        B --> C{Task Queue - Redis}
+        C --> D[Worker 1]
+        C --> E[Worker 2]
+        C --> F[Worker N]
+    end
+
+    subgraph "Camada 3: Normalização"
+        D & E & F --> G[HTML Parser]
+        G --> H[Content Cleaner]
+        H --> I[Language Det]
+    end
+
+    subgraph "Camada 4: Semântica"
+        I --> J[Embedding Gen - BERT]
+    end
+
+    subgraph "Camada 5: Categorização"
+        J --> K[Clustering - HDBSCAN]
+        K --> L[Zero-shot classifier]
+    end
+
+    subgraph "Camada 6: Armazenamento"
+        L --> M[(PostgreSQL - Metadados)]
+        L --> N[(ElasticSearch - Texto)]
+    end
+
+    subgraph "Camada 7: Governança"
+        M & N --> O[Audit Logs]
+        O --> P[Legal Compliance Check]
+    end
